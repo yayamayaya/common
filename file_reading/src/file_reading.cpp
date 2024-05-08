@@ -1,10 +1,11 @@
 #include "file_reading.h"
 
+_INIT_LOG();
+
 int get_file_size(FILE *file);
 
 int file_read(char **buff, int *file_size, const char *file_name)
 {
-    _INIT_LOG();
     _OPEN_LOG("logs/file_reading.log");
 
     int size_of_file = 0;
@@ -26,7 +27,7 @@ int file_read(char **buff, int *file_size, const char *file_name)
         _CLOSE_LOG();
         return EMPTY_FILE_ERR;
     }
-    LOG("> size of file is: %d\n", file_size);    
+    LOG("> size of file is: %d\n", size_of_file);    
         
     LOG("> allocating memory:\n");
     buffer = (char *)calloc(size_of_file + 1, sizeof(char));
@@ -40,12 +41,12 @@ int file_read(char **buff, int *file_size, const char *file_name)
 
     int error = 0;
     LOG("> memory alocated, reading file into the buffer\n");
-    if ((int)fread(buffer, size_of_file, sizeof(char), file_to_read) != size_of_file)
+    if ((int)fread(buffer, sizeof(char), size_of_file, file_to_read) < size_of_file)
     {
         LOG("[error]>>> file wasn't read fully\n");
         error = NOT_READ_FULLY;
     }
-    LOG("> file reading completed");
+    LOG("> file reading completed\n");
 
     *buff = buffer;
     if (file_size)

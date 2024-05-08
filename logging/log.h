@@ -1,16 +1,32 @@
 #ifndef LOG_FUNC
 #define LOG_FUNC
 
-#include <stdio.h>
+#include <stdio.h>\
+
+//#define DEBUG
 
 #ifdef DEBUG
 
-#define _INIT_LOG() FILE *log_file = NULL;
+#define _INIT_LOG() static FILE *log_file = NULL;
 
 #define _OPEN_LOG(arg)                                      \
     log_file = fopen(arg, "wb");                            \
     if (!log_file)                                          \
-        printf("[error]> couldn't open logfile %s.\n", arg);\
+        {printf("[error]> couldn't open logfile %s.\n", arg); return 0;}\
+                                                            \
+    setbuf(log_file, NULL)
+
+#define _OPEN_N_LOG(format)                                             \
+    static int log_num = 0;                                             \
+    char log_name[200] = {};                                            \
+    snprintf(log_name, sizeof(log_name), format, log_num);              \
+    log_num++;                                                          \
+    _OPEN_LOG(log_name)
+
+#define _OPEN_A_LOG(arg)                                      \
+    log_file = fopen(arg, "ab");                            \
+    if (!log_file)                                          \
+        {printf("[error]> couldn't open logfile %s.\n", arg);}\
                                                             \
     setbuf(log_file, NULL)
 
@@ -25,11 +41,18 @@
         fclose(log_file);\
         log_file = NULL;\
     }
+
+#define _CLEAR_LOGS()\
+    system("rm logs/*")
+
 #else
-#define _INIT_LOG() do{}while(0)
+#define _INIT_LOG() 
 #define _OPEN_LOG(arg) do{}while(0)
+#define _OPEN_A_LOG(arg)
+#define _OPEN_N_LOG(format)
 #define LOG(...) do{}while(0)
 #define _CLOSE_LOG() do{}while(0)
+#define _CLEAR_LOGS()
 #endif
 
 enum LOG_ERRS
@@ -37,7 +60,5 @@ enum LOG_ERRS
     ERR     = 1,
     NO_ERR  = 0,
 };
-    
-    
 
 #endif
