@@ -34,6 +34,10 @@
     if (log_file)\
         fprintf(log_file, __VA_ARGS__)
 
+#define W_LOG(...)\
+    if (log_file)\
+        fwprintf(log_file, __VA_ARGS__)
+
 #define _CLOSE_LOG()\
     if (log_file)\
     {\
@@ -51,6 +55,7 @@
 #define _OPEN_A_LOG(arg)
 #define _OPEN_N_LOG(format)
 #define LOG(...) do{}while(0)
+#define W_LOG(...) do{}while(0)
 #define _CLOSE_LOG() do{}while(0)
 #define _CLEAR_LOGS()
 #endif

@@ -20,7 +20,7 @@ int file_read(char **buff, int *file_size, const char *file_name)
     }
 
     size_of_file = get_file_size(file_to_read);
-    if (file_size == 0)
+    if (size_of_file == 0)
     {
         LOG("[error]>>> size of file is zero, check the file\n");
         fclose(file_to_read);
