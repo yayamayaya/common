@@ -23,6 +23,7 @@ int file_read(char **buff, int *file_size, const char *file_name)
     if (size_of_file == 0)
     {
         LOG("[error]>>> size of file is zero, check the file\n");
+        printf("[error]>>> size of file is zero, check the file\n");
         fclose(file_to_read);
         _CLOSE_LOG();
         return EMPTY_FILE_ERR;

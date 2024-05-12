@@ -12,7 +12,7 @@
 #define _OPEN_LOG(arg)                                      \
     log_file = fopen(arg, "wb");                            \
     if (!log_file)                                          \
-        {printf("[error]> couldn't open logfile %s.\n", arg); return 0;}\
+        {printf("[error]> couldn't open logfile %s.\n", arg);}\
                                                             \
     setbuf(log_file, NULL)
 
