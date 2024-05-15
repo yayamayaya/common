@@ -1,14 +1,10 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.15)
 
 set(SOURCES
     src/file_reading.cpp
 )
 
-set(HEADERS
-    src/file_reading.h
-)
-
-add_library(file_reading ${SOURCES} ${HEADERS})
+add_library(file_reading src/file_reading.cpp)
 
 target_include_directories(
     file_reading
