@@ -1,7 +1,8 @@
 #ifndef LOG_FUNC
 #define LOG_FUNC
 
-#include <stdio.h>\
+#include <stdio.h>
+#include <stdlib.h>
 
 //#define DEBUG
 
@@ -46,8 +47,6 @@
         log_file = NULL;\
     }
 
-#define _CLEAR_LOGS()\
-    system("rm logs/*")
 
 #else
 #define _INIT_LOG() 
@@ -57,8 +56,10 @@
 #define LOG(...) do{}while(0)
 #define W_LOG(...) do{}while(0)
 #define _CLOSE_LOG() do{}while(0)
-#define _CLEAR_LOGS()
 #endif
+
+#define _CLEAR_LOGS()\
+    system("rm logs/*")
 
 enum LOG_ERRS
 {
