@@ -16,6 +16,7 @@ int file_read(char **buff, int *file_size, const char *file_name)
     if (!file_to_read)
     {
         LOG("[error]>>> couldn't open file to read, check the directory\n");
+        _CLOSE_LOG();       
         return READ_FILE_OPN_ERR;
     }
 
