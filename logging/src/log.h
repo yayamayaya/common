@@ -3,10 +3,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
+#include <stdarg.h>
+#include <time.h>
+#include <assert.h>
+
+#define MSG 0
+#define ERR 1
 
 //#define DEBUG
 
-#ifdef DEBUG
+enum LOG_ERRORS
+{
+    FILE_OPEN_ERR = 111,
+};
+
+/*#ifdef DEBUG
 
 #define _INIT_LOG() static FILE *log_file = NULL;
 
@@ -56,15 +68,12 @@
 #define LOG(...) do{}while(0)
 #define W_LOG(...) do{}while(0)
 #define _CLOSE_LOG() do{}while(0)
-#endif
+#endif*/
 
-#define _CLEAR_LOGS()\
-    system("rm logs/*")
+int log_init(const char *log_name);
 
-enum LOG_ERRS
-{
-    ERR     = 1,
-    NO_ERR  = 0,
-};
+void log(const int option, const char *format, ...);
+
+void close_log();
 
 #endif
