@@ -18,6 +18,22 @@ enum LOG_ERRORS
     FILE_OPEN_ERR = 111,
 };
 
+#ifdef DEBUG
+
+#define LOG(...)        log(MSG, __VA_ARGS__)
+#define LOG_ERR(...)    log(ERR, __VA_ARGS__)
+#define _OPEN_LOG(arg)  log_init(arg)
+#define _CLOSE_LOG()    close_log()
+
+#else
+
+#define LOG(...)
+#define LOG_ERR(...)
+#define _OPEN_LOG(arg)  0
+#define _CLOSE_LOG()
+
+#endif
+
 /*#ifdef DEBUG
 
 #define _INIT_LOG() static FILE *log_file = NULL;

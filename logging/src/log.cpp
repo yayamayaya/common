@@ -38,12 +38,12 @@ void log(const int option, const char *format, ...)
 
     if      (option == ERR)
     {
-        snprintf(log_msg, sizeof(log_msg), "[%d]error>>> %s\n", clock(), format);
+        snprintf(log_msg, sizeof(log_msg), "[%ld]error>>> %s\n", clock(), format);
         vprintf(log_msg, args);
     }
     else
     {
-        snprintf(log_msg, sizeof(log_msg), "[%d]> %s\n", clock(), format);
+        snprintf(log_msg, sizeof(log_msg), "[%ld]> %s\n", clock(), format);
     }
 
     if (log_file)
@@ -57,4 +57,6 @@ void close_log()
     log(MSG, "closing logfile");
     if (log_file)
         fclose(log_file);
+
+    log_file = NULL;
 }

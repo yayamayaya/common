@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../logging/log.h"
+#include "log.h"
 
 enum FILE_READING_ERRORS
 {

@@ -10,4 +10,6 @@ target_include_directories(
     file_reading
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
-)
+    )
+    
+target_link_libraries(file_reading logging)

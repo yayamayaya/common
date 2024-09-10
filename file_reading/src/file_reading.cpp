@@ -1,61 +1,52 @@
 #include "file_reading.h"
 
-_INIT_LOG();
-
 int get_file_size(FILE *file);
 
 int file_read(char **buff, int *file_size, const char *file_name)
 {
-    _OPEN_LOG("logs/file_reading.log");
-
     int size_of_file = 0;
     char *buffer = NULL;
 
-    LOG("> starting file reading:\n");
+    LOG("starting file reading:");
     FILE *file_to_read = fopen(file_name, "rb");
     if (!file_to_read)
     {
-        LOG("[error]>>> couldn't open file to read, check the directory\n");
-        _CLOSE_LOG();       
+        LOG_ERR("couldn't open file to read, check the directory");
         return READ_FILE_OPN_ERR;
     }
 
     size_of_file = get_file_size(file_to_read);
     if (size_of_file == 0)
     {
-        LOG("[error]>>> size of file is zero, check the file\n");
-        printf("[error]>>> size of file is zero, check the file\n");
+        LOG_ERR("size of file is zero, check the file");
         fclose(file_to_read);
-        _CLOSE_LOG();
         return EMPTY_FILE_ERR;
     }
-    LOG("> size of file is: %d\n", size_of_file);    
+    LOG("size of file is: %d", size_of_file);    
         
-    LOG("> allocating memory:\n");
+    LOG("allocating memory:");
     buffer = (char *)calloc(size_of_file + 1, sizeof(char));
     if (!buffer)
     {
-        LOG("[error]>>> couldn't allocate memory for buffer\n");
+        LOG_ERR("couldn't allocate memory for buffer");
         fclose(file_to_read);
-        _CLOSE_LOG();
         return FILE_MEM_ALC_ERR;
     }
 
     int error = 0;
-    LOG("> memory alocated, reading file into the buffer\n");
+    LOG("memory alocated, reading file into the buffer");
     if ((int)fread(buffer, sizeof(char), size_of_file, file_to_read) < size_of_file)
     {
-        LOG("[error]>>> file wasn't read fully\n");
+        LOG_ERR("file wasn't read fully");
         error = NOT_READ_FULLY;
     }
-    LOG("> file reading completed\n");
+    LOG("file reading completed");
 
     *buff = buffer;
     if (file_size)
         *file_size = size_of_file;
     
     fclose(file_to_read);
-    _CLOSE_LOG();
 
     return error;
 }
