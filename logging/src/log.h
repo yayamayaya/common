@@ -20,8 +20,8 @@ enum LOG_ERRORS
 
 #ifdef DEBUG
 
-#define LOG(...)        log(MSG, __VA_ARGS__)
-#define LOG_ERR(...)    log(ERR, __VA_ARGS__)
+#define LOG(...)        log_msg(MSG, __VA_ARGS__)
+#define LOG_ERR(...)    log_msg(ERR, __VA_ARGS__)
 #define _OPEN_LOG(arg)  log_init(arg)
 #define _CLOSE_LOG()    close_log()
 
@@ -29,7 +29,7 @@ enum LOG_ERRORS
 
 #define LOG(...)
 #define LOG_ERR(...)
-#define _OPEN_LOG(arg)  0
+#define _OPEN_LOG(arg)
 #define _CLOSE_LOG()
 
 #endif
@@ -88,7 +88,7 @@ enum LOG_ERRORS
 
 int log_init(const char *log_name);
 
-void log(const int option, const char *format, ...);
+void log_msg(const int option, const char *format, ...);
 
 void close_log();
 

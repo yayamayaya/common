@@ -1,4 +1,5 @@
 #include "log.h"
+#include <errno.h>
 
 static FILE *log_file = NULL;
 
@@ -7,7 +8,8 @@ int log_init(const char *log_name)
     DIR *log_dir = opendir("logs");
     if (!log_dir)
     {
-        printf("creating directory\n");
+        errno = 0;
+        printf("creating log directory\n");
         system("mkdir logs");
     }
     closedir(log_dir);
@@ -27,7 +29,7 @@ int log_init(const char *log_name)
     return 0;
 }
 
-void log(const int option, const char *format, ...)
+void log_msg(const int option, const char *format, ...)
 {
     assert(option == MSG || option == ERR);
 
@@ -54,7 +56,7 @@ void log(const int option, const char *format, ...)
 
 void close_log()
 {
-    log(MSG, "closing logfile");
+    log_msg(MSG, "closing logfile");
     if (log_file)
         fclose(log_file);
 
